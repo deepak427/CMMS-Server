@@ -28,8 +28,6 @@ export const setSchedule = async (req, res) => {
       date=date + interval*60*100*60*10
     }
 
-    console.log(date.toLocaleString())
-
     await schedule.updateOne({ name }, { $set: { nextTrigger: date } });
 
     var timeInterval = "";
@@ -67,7 +65,8 @@ export const setSchedule = async (req, res) => {
     taskMap["demo"] = task;
 
     return res.status(200).json({
-      message: "Added asset successfully",
+      name,
+      nextTrigger: date,
     });
   } catch (error) {
     return res.status(409).json("Could't add a new asset");
@@ -77,10 +76,10 @@ export const setSchedule = async (req, res) => {
 export const addSchedule = async (req, res) => {
   const scheduleData = req.body;
   try {
-    const addSchedule = new schedule(scheduleData);
-    await addSchedule.save();
+    const addedSchedule = new schedule(scheduleData);
+    await addedSchedule.save();
     return res.status(200).json({
-      message: "Schedule added successfully",
+      addedSchedule,
     });
   } catch (error) {
     return res.status(409).json("Could't add a new schedule");

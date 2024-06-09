@@ -4,12 +4,11 @@ import cors from "cors";
 import dotenv from "dotenv"
 import bodyParser from 'body-parser';
 
-import cron from "node-cron"
-
 import assetsroutes from "./routes/assets.js"
 import scheduleroutes from "./routes/schedule.js"
 import taskroutes from "./routes/task.js"
 import workOrderroutes from "./routes/workOrder.js"
+import taskGrouproutes from "./routes/taskGroup.js"
 
 mongoose.set("strictQuery", true);
 
@@ -29,6 +28,7 @@ app.use('/assets', assetsroutes);
 app.use('/schedule', scheduleroutes)
 app.use('/task', taskroutes)
 app.use('/workorder', workOrderroutes)
+app.use('/taskGroup', taskGrouproutes)
 
 const PORT =  5555;
 
