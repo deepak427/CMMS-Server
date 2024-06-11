@@ -9,6 +9,7 @@ import scheduleroutes from "./routes/schedule.js"
 import taskroutes from "./routes/task.js"
 import workOrderroutes from "./routes/workOrder.js"
 import taskGrouproutes from "./routes/taskGroup.js"
+import accountRoutes from "./routes/account.js"
 
 mongoose.set("strictQuery", true);
 
@@ -29,6 +30,7 @@ app.use('/schedule', scheduleroutes)
 app.use('/task', taskroutes)
 app.use('/workorder', workOrderroutes)
 app.use('/taskGroup', taskGrouproutes)
+app.use('/account', accountRoutes)
 
 const PORT =  5555;
 
