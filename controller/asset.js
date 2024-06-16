@@ -38,7 +38,11 @@ export const updateAsset = async (req, res) => {
         message: "Asset doesn't exist",
       });
     }
-    const updatedAssetData = await asset.findOneAndUpdate({ assetId }, { $set: updatedData }, {new: true});
+    const updatedAssetData = await asset.findOneAndUpdate(
+      { assetId },
+      { $set: updatedData },
+      { new: true }
+    );
     return res.status(200).json({ assetId, updatedAssetData });
   } catch (error) {
     return res.status(404).json({ message: error.message });
