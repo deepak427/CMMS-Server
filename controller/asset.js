@@ -30,7 +30,7 @@ export const addAsset = async (req, res) => {
 };
 
 export const updateAsset = async (req, res) => {
-  const { assetId, updatedData } = req.body;
+  const { assetId, updatedData, logData } = req.body;
   try {
     const existingAsset = await asset.findOne({ assetId });
     if (!existingAsset) {
@@ -40,7 +40,7 @@ export const updateAsset = async (req, res) => {
     }
     const updatedAssetData = await asset.findOneAndUpdate(
       { assetId },
-      { $set: updatedData },
+      { $set: updatedData, $push: { logs: logData } },
       { new: true }
     );
     return res.status(200).json({ assetId, updatedAssetData });

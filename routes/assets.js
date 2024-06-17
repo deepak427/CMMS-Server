@@ -1,7 +1,7 @@
 import express from "express";
 
 import { addAsset, getAllAssets, updateAsset } from "../controller/asset.js";
-import { addLog, getAllLogs, setImage } from "../controller/updateAssetExtra.js"
+import { setImage } from "../controller/updateAssetExtra.js"
 
 const router = express.Router();
 
@@ -10,7 +10,5 @@ router.get('/get', getAllAssets)
 router.post('/update', updateAsset)
 
 router.post('/setImage', setImage)
-router.post('/addLog', addLog)
-router.get('/getLogs', getAllLogs)
 
 export default router
