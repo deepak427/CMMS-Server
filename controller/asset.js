@@ -48,3 +48,23 @@ export const updateAsset = async (req, res) => {
     return res.status(404).json({ message: error.message });
   }
 };
+
+export const deleteAsset = async (req, res) => {
+  const { assetId } = req.body;
+  try {
+    const existingAsset = await asset.findOne({ assetId });
+    if (!existingAsset) {
+      return res.status(403).json({
+        message: "Asset doesn't exist",
+      });
+    }
+
+    await asset.deleteOne({assetId});
+
+    return res.status(200).json({
+      deletedAsset: assetId,
+    });
+  } catch (error) {
+    return res.status(409).json("Could't add a new asset");
+  }
+};
