@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const logSchema = new mongoose.Schema({
   user: { type: String, default: "User" },
-  time: { type: Date, default: Date.now() },
+  time: { type: Date, default: Date.now },
   note: { type: String, required: true },
 });
 
