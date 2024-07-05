@@ -10,6 +10,7 @@ import taskroutes from "./routes/task.js"
 import workOrderroutes from "./routes/workOrder.js"
 import taskGrouproutes from "./routes/taskGroup.js"
 import accountRoutes from "./routes/account.js"
+import assetAttributesRoutes from "./routes/assetAttributes.js"
 
 mongoose.set("strictQuery", true);
 
@@ -31,6 +32,7 @@ app.use('/task', taskroutes)
 app.use('/workorder', workOrderroutes)
 app.use('/taskGroup', taskGrouproutes)
 app.use('/account', accountRoutes)
+app.use('/assetAttributes', assetAttributesRoutes)
 
 const PORT =  5555;
 
