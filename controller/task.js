@@ -11,7 +11,7 @@ export const getAllTasks = async (req, res) => {
 };
 
 export const addTask = async (req, res) => {
-  const { category, taskDescription } = req.body;
+  const { category, updatedTaskGroup } = req.body;
   try {
     const existingCategory = await task.findOne({ category });
     if (!existingCategory) {
@@ -19,8 +19,12 @@ export const addTask = async (req, res) => {
         message: "Category doesn't exist",
       });
     }
-    await task.updateOne({ category }, { $push: { tasks: taskDescription } });
-    return res.status(200).json({ category, taskDescription });
+    const updatedOne = await task.findOneAndUpdate(
+      { category },
+      { $set: updatedTaskGroup },
+      { new: true }
+    );
+    return res.status(200).json({ category, updatedOne });
   } catch (error) {
     return res.status(409).json("Could't add a new task");
   }
