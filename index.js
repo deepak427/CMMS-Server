@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import bodyParser from 'body-parser';
 
 import assetsroutes from "./routes/assets.js"
+import partsroutes from "./routes/part.js"
 import scheduleroutes from "./routes/schedule.js"
 import taskroutes from "./routes/task.js"
 import workOrderroutes from "./routes/workOrder.js"
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/assets', assetsroutes);
+app.use('/parts', partsroutes);
 app.use('/schedule', scheduleroutes)
 app.use('/task', taskroutes)
 app.use('/workorder', workOrderroutes)
