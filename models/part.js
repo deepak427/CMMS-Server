@@ -1,10 +1,19 @@
 import mongoose from "mongoose";
 
 const logSchema = new mongoose.Schema({
-  user: { type: String, default: "User" },
+  user: { type: String, default: "Madhur Miglani" },
   time: { type: Date, default: Date.now },
   note: { type: String, required: true },
 });
+
+const stockLogsSchema = new mongoose.Schema({
+  user: { type: String, default: "Madhur Miglani" },
+  time: { type: Date, default: Date.now },
+  note: { type: String, required: true },
+  qtyBefore: { type: Number, default: 0},
+  qtyAfter: {type: Number, required: true}
+});
+
 
 const stockSchema = new mongoose.Schema({
   location: { type: String, },
@@ -29,7 +38,8 @@ const partSchema = mongoose.Schema({
   model: { type: String },
   lastPrice: { type: String },
   logs: [logSchema],
-  stockLevelPerLocation: [stockSchema]
+  stockLevelPerLocation: [stockSchema],
+  stockLogs: [stockLogsSchema]
 });
 
 export default mongoose.model("Parts", partSchema);

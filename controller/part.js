@@ -38,11 +38,12 @@ export const updatePart = async (req, res) => {
         message: "Part doesn't exist",
       });
     }
-    const updatedPartData = await part.findOneAndUpdate(
+    var updatedPartData = await part.findOneAndUpdate(
       { partId },
       { $set: updatedData, $push: { logs: logData } },
       { new: true }
     );
+
     return res.status(200).json({ partId, updatedPartData });
   } catch (error) {
     return res.status(409).json({ message: error.message });
