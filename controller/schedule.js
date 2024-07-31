@@ -20,12 +20,12 @@ export const setSchedule = async (req, res) => {
       value.stop();
     }
     var date = new Date();
-    date = parseInt(date.getTime())
+    date = parseInt(date.getTime());
 
     if (unit == 0) {
-      date=date + interval*60*100*10
+      date = date + interval * 60 * 100 * 10;
     } else {
-      date=date + interval*60*100*60*10
+      date = date + interval * 60 * 100 * 60 * 10;
     }
 
     await schedule.updateOne({ name }, { $set: { nextTrigger: date } });
@@ -40,7 +40,7 @@ export const setSchedule = async (req, res) => {
 
     const task = cron.schedule(timeInterval, async () => {
       var dateCronTime = new Date();
-      dateCronTime = parseInt(dateCronTime.getTime())
+      dateCronTime = parseInt(dateCronTime.getTime());
       await schedule.updateOne(
         { name },
         { $set: { currentAssetReading: dateCronTime } }
@@ -52,9 +52,9 @@ export const setSchedule = async (req, res) => {
       await addWorkOrder.save();
 
       if (unit == 0) {
-        dateCronTime=dateCronTime + interval*60*100*10
+        dateCronTime = dateCronTime + interval * 60 * 100 * 10;
       } else {
-        dateCronTime=dateCronTime + interval*60*100*60*10
+        dateCronTime = dateCronTime + interval * 60 * 100 * 60 * 10;
       }
       await schedule.updateOne(
         { name },
@@ -76,6 +76,15 @@ export const setSchedule = async (req, res) => {
 export const addSchedule = async (req, res) => {
   const scheduleData = req.body;
   try {
+    const existingSchedule = await schedule.findOne({
+      SchedulingCode: scheduleData.SchedulingCode,
+    });
+    if (existingSchedule) {
+      return res.status(403).json({
+        message: "Schedule already exist",
+      });
+    }
+
     const addedSchedule = new schedule(scheduleData);
     await addedSchedule.save();
     return res.status(200).json({
@@ -83,5 +92,26 @@ export const addSchedule = async (req, res) => {
     });
   } catch (error) {
     return res.status(409).json("Could't add a new schedule");
+  }
+};
+
+export const updateSchedule = async (req, res) => {
+  const { scheduleId, updatedData, logData } = req.body;
+  try {
+    const existingSchedule = await schedule.findOne({ scheduleId });
+    if (!existingSchedule) {
+      return res.status(403).json({
+        message: "Schedule doesn't exist",
+      });
+    }
+    var updatedScheduleData = await schedule.findOneAndUpdate(
+      { scheduleId },
+      { $set: updatedData, $push: { logs: logData } },
+      { new: true }
+    );
+
+    return res.status(200).json({ scheduleId, updatedScheduleData });
+  } catch (error) {
+    return res.status(409).json({ message: error.message });
   }
 };
