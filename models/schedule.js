@@ -21,6 +21,7 @@ const scheduleSchema = mongoose.Schema({
   currentAssetReading: { type: Date },
   nextTrigger: { type: Date },
   labourTasks: [{ type: String }],
+  parts: [{type: String}],
 });
 
 export default mongoose.model("Schedule", scheduleSchema);
