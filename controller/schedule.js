@@ -3,6 +3,8 @@ import schedule from "../models/schedule.js";
 import workOrder from "../models/workOrder.js";
 const taskMap = {};
 
+// cron.schedule(`*/${interval} * * * *`)
+
 export const getAllSchedules = async (req, res) => {
   try {
     const schedulesList = await schedule.find();
